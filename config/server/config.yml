@@ -3,7 +3,7 @@ app:
   version: '1.0.0'
 
 grpc:
-  port: ":9000"
+  port: ":81"
 
 files_storage:
   location: "client_files"

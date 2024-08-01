@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
@@ -41,6 +42,17 @@ func NewConfig() (*Config, error) {
 	cfg := &Config{}
 
 	err := cleanenv.ReadConfig("./config/server/config.yml", cfg)
+	if err != nil {
+		if os.IsNotExist(err) {
+			err = cleanenv.ReadConfig("./config.yml", cfg)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			return nil, err
+		}
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("config error: %w", err)
 	}
