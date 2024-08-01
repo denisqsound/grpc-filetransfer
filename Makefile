@@ -35,7 +35,7 @@ docker-run:
 
 docker-publish:
 	docker tag $(IMAGE_NAME) $(DOCKER_TAG)
-	docker push $(IMAGE_NAME)
+	docker push $(DOCKER_TAG)
 
 #================================================================================================
 
