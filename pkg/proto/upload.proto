@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/denisqsound/grpc-filetransfer/upload";
+option go_package = "./;uploadpb";
 
 service FileService {
   rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);

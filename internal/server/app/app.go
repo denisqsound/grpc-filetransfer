@@ -2,10 +2,6 @@ package app
 
 import (
 	"context"
-	config "github.com/denisqosund/grpc-filetransfer/config/server"
-	"github.com/denisqosund/grpc-filetransfer/internal/server/service"
-	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
-	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 	"net"
 	"os"
 	"os/signal"
@@ -13,22 +9,31 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/denisqosund/grpc-filetransfer/internal/server/service"
+	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
+
+	config "github.com/denisqosund/grpc-filetransfer/config/server"
+	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 )
 
 // Run creates objects via constructors.
 func Run(cfg *config.Config) {
-	l := logger.New(cfg.Log.Level)
-	l.Debug("App started")
+	log := logger.New(cfg.Log.Level)
+	log.Debug("App started")
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	g := grpc.NewServer()
-	reflection.Register(g)
-	uploadServer := service.New(l, cfg)
-	uploadpb.RegisterFileServiceServer(g, uploadServer)
+	serverRegistrar := grpc.NewServer()
+
+	reflection.Register(serverRegistrar)
+	uploadServer := service.New(log, cfg)
+
+	uploadpb.RegisterFileServiceServer(serverRegistrar, uploadServer)
+
 	listen, err := net.Listen("tcp", cfg.GRPC.Port)
 	if err != nil {
-		l.Fatal(err)
+		log.Fatal(err)
 	}
 	interrupt := make(chan os.Signal, 1)
 	shutdownSignals := []os.Signal{
@@ -39,14 +44,14 @@ func Run(cfg *config.Config) {
 	}
 	signal.Notify(interrupt, shutdownSignals...)
 	go func(g *grpc.Server) {
-		l.Info("setGRPC - gRPC server started on " + cfg.GRPC.Port)
+		log.Info("setGRPC - gRPC server started on " + cfg.GRPC.Port)
 		if err := g.Serve(listen); err != nil {
-			l.Fatal(err)
+			log.Fatal(err)
 		}
-	}(g)
+	}(serverRegistrar)
 	select {
 	case killSignal := <-interrupt:
-		l.Debug("Got ", killSignal)
+		log.Debug("Got ", killSignal)
 		cancel()
 	case <-ctx.Done():
 	}

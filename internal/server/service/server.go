@@ -1,15 +1,18 @@
 package service
 
 import (
+	"context"
 	"fmt"
-	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
-	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 	"io"
 	"path/filepath"
 
-	config "github.com/denisqosund/grpc-filetransfer/config/server"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
+
+	config "github.com/denisqosund/grpc-filetransfer/config/server"
+	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 )
 
 type FileServiceServer struct {
@@ -57,4 +60,8 @@ func (g *FileServiceServer) Upload(stream uploadpb.FileService_UploadServer) err
 	fileName := filepath.Base(file.FilePath)
 	g.l.Debug("saved file: %s, size: %d", fileName, fileSize)
 	return stream.SendAndClose(&uploadpb.FileUploadResponse{FileName: fileName, Size: fileSize})
+}
+
+func (g *FileServiceServer) HelloWorld(context.Context, *uploadpb.HelloWorldRequest) (*uploadpb.HelloWorldResponse, error) {
+	return &uploadpb.HelloWorldResponse{Message: "Hello World"}, nil
 }

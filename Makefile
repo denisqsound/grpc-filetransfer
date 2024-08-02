@@ -64,3 +64,6 @@ docker-publish-client:
 
 clean:
 	rm -f 8GB.bin
+
+generate:
+	protoc --go_out=pkg/proto --go-grpc_out=pkg/proto pkg/proto/upload.proto
