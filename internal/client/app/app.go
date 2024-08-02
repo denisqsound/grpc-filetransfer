@@ -2,10 +2,10 @@ package app
 
 import (
 	"fmt"
+	"github.com/denisqosund/grpc-filetransfer/internal/client/service"
 	"log"
 	"os"
 
-	"github.com/denisqsound/grpc-filetransfer/internal/client/service"
 	"github.com/spf13/cobra"
 )
 

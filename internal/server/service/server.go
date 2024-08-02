@@ -2,12 +2,12 @@ package service
 
 import (
 	"fmt"
+	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
+	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 	"io"
 	"path/filepath"
 
 	config "github.com/denisqosund/grpc-filetransfer/config/server"
-	"github.com/denisqsound/grpc-filetransfer/pkg/logger"
-	uploadpb "github.com/denisqsound/grpc-filetransfer/pkg/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

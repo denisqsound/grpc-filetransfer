@@ -2,16 +2,15 @@ package app
 
 import (
 	"context"
+	config "github.com/denisqosund/grpc-filetransfer/config/server"
+	"github.com/denisqosund/grpc-filetransfer/internal/server/service"
+	"github.com/denisqosund/grpc-filetransfer/pkg/logger"
+	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
-	uploadpb "github.com/denisqsound/grpc-filetransfer/pkg/proto"
-
-	config "github.com/denisqsound/grpc-filetransfer/config/server"
-	"github.com/denisqsound/grpc-filetransfer/internal/server/service"
-	"github.com/denisqsound/grpc-filetransfer/pkg/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
