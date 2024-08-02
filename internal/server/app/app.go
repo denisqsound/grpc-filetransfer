@@ -7,11 +7,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	uploadpb "github.com/dimk00z/grpc-filetransfer/pkg/proto"
+	uploadpb "github.com/denisqsound/grpc-filetransfer/pkg/proto"
 
-	config "github.com/dimk00z/grpc-filetransfer/config/server"
-	"github.com/dimk00z/grpc-filetransfer/internal/server/service"
-	"github.com/dimk00z/grpc-filetransfer/pkg/logger"
+	config "github.com/denisqsound/grpc-filetransfer/config/server"
+	"github.com/denisqsound/grpc-filetransfer/internal/server/service"
+	"github.com/denisqsound/grpc-filetransfer/pkg/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

@@ -1,19 +1,31 @@
 syntax = "proto3";
- 
+
+option go_package = "github.com/denisqsound/grpc-filetransfer/upload";
+
+service FileService {
+  rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);
+  rpc HelloWorld(HelloWorldRequest) returns(HelloWorldResponse);
+}
+
 package proto;
- 
-option go_package = "./;uploadpb";
+
+
 
 message FileUploadRequest {
-    string file_name = 1;
-    bytes chunk = 2;
+  string file_name = 1;
+  bytes chunk = 2;
 }
-  
+
 message FileUploadResponse {
   string file_name = 1;
   uint32 size = 2;
 }
-  
-service FileService {
-   rpc Upload(stream FileUploadRequest) returns(FileUploadResponse);
+
+message HelloWorldRequest {
+  string name = 1;
 }
+
+message HelloWorldResponse {
+  string message = 1;
+}
+  

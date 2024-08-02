@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	uploadpb "github.com/dimk00z/grpc-filetransfer/pkg/proto"
+	uploadpb "github.com/denisqosund/grpc-filetransfer/pkg/proto"
 	"google.golang.org/grpc"
 )
 

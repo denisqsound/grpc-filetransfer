@@ -23,7 +23,7 @@ type (
 		Version string `env-required:"true" yaml:"version" env:"APP_VERSION"`
 	}
 
-	// FRPC -.
+	// GRPC FRPC -.
 	GRPC struct {
 		Port string `yaml:"port" env:"GRPC_PORT"`
 	}

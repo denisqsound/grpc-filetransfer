@@ -2,7 +2,7 @@
 
 ## Article
 
-https://dev.to/dimk00z/grpc-file-transfer-with-go-1nb2
+https://dev.to/denisqsound/grpc-file-transfer-with-go-1nb2
 
 ## Server 
 
