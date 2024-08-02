@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"google.golang.org/grpc/credentials/insecure"
 	"io"
 	"log"
 	"os"
@@ -29,7 +30,7 @@ func New(addr string, filePath string, batchSize int) *ClientService {
 
 func (s *ClientService) SendFile() error {
 	log.Println(s.addr, s.filePath)
-	conn, err := grpc.Dial(s.addr, grpc.WithInsecure())
+	conn, err := grpc.Dial(s.addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
