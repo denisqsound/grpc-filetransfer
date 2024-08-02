@@ -1,7 +1,9 @@
 VERSION    ?= $(shell git rev-parse --short HEAD)
-DOCKER_TAG ?= denisqsound/grpc-filetransfer:$(VERSION)
 
-IMAGE_NAME ?= denisqsound/grpc-filetransfer:test
+DOCKER_SERVER_TAG ?= denisqsound/grpc-filetransfer-server:$(VERSION)
+DOCKER_CLIENT_TAG ?= denisqsound/grpc-filetransfer-client:$(VERSION)
+
+IMAGE_SERVER_NAME ?= denisqsound/grpc-filetransfer-server:test
 
 HOST ?= 127.0.0.1
 PORT ?= 81
@@ -23,19 +25,40 @@ run-client:
 
 #================================================================================================
 
-build:
+# Server
+
+build-server:
 	mkdir -p $(DIST_PATH)
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(DIST_PATH)/server ./cmd/server
 
-docker-build:
-	docker build -t $(IMAGE_NAME) .
+docker-build-server:
+	docker build -f server.Dockerfile -t $(IMAGE_SERVER_NAME)  .
 
-docker-run:
-	docker run --network host -p 81:81 $(IMAGE_NAME)
+docker-run-server:
+	docker run --network host -p 81:81 $(IMAGE_SERVER_NAME)
 
-docker-publish:
-	docker tag $(IMAGE_NAME) $(DOCKER_TAG)
-	docker push $(DOCKER_TAG)
+docker-publish-server:
+	docker tag $(IMAGE_SERVER_NAME) $(DOCKER_SERVER_TAG)
+	docker push $(DOCKER_SERVER_TAG)
+
+#================================================================================================
+
+# Client
+
+build-client:
+	mkdir -p $(DIST_PATH)
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(DIST_PATH)/client ./cmd/client
+	go build -o $(DIST_PATH)/generator ./cmd/generator
+
+docker-build-client:
+	docker build -f client.Dockerfile -t $(DOCKER_CLIENT_TAG)  .
+
+docker-run-client:
+	docker run --network host $(DOCKER_CLIENT_TAG)
+
+docker-publish-client:
+	docker tag $(DOCKER_CLIENT_TAG) $(DOCKER_CLIENT_TAG)
+	docker push $(DOCKER_CLIENT_TAG)
 
 #================================================================================================
 
