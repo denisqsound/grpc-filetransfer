@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/dimk00z/grpc-filetransfer/internal/client/app"
+	"github.com/denisqosund/grpc-filetransfer/internal/client/app"
 )
 
 func main() {

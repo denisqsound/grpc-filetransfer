@@ -54,7 +54,7 @@ docker-build-client:
 	docker build -f client.Dockerfile -t $(DOCKER_CLIENT_TAG)  .
 
 docker-run-client:
-	docker run --network host $(DOCKER_CLIENT_TAG)
+	docker run --network host -it $(DOCKER_CLIENT_TAG) sh
 
 docker-publish-client:
 	docker tag $(DOCKER_CLIENT_TAG) $(DOCKER_CLIENT_TAG)

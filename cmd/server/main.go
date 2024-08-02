@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	config "github.com/dimk00z/grpc-filetransfer/config/server"
-	"github.com/dimk00z/grpc-filetransfer/internal/server/app"
+	config "github.com/denisqosund/grpc-filetransfer/config/server"
+	"github.com/denisqosund/grpc-filetransfer/internal/server/app"
 )
 
 func main() {
